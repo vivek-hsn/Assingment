@@ -1,0 +1,12 @@
+package assignment.test;
+
+import org.testng.annotations.Test;
+
+public class iPhonePrice {
+	
+	@Test
+	public void checkPriceAmazon(){
+		
+	}
+
+}

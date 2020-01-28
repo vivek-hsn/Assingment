@@ -1,0 +1,69 @@
+package assignment.pages;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class Amazon {
+	
+	WebDriver driver;
+	
+	@FindBy(xpath="//div/input[@id='twotabsearchtextbox']")
+	WebElement searchBox;
+	
+	@FindBy(xpath="//div/input[@type='submit']")
+	WebElement searchBtn;
+	
+	@FindBy(xpath="//div[@class='sg-row']//following::a/span[contains(text(),'iPhone XR (64GB) - Yellow')]")
+	WebElement iphonelink;
+	
+	@FindBy(css="body")
+	WebElement bdy;
+	
+	@FindBy(xpath="//tr[td[text()='Price:']]//following-sibling::span[@id='priceblock_ourprice']")
+	WebElement iphonePrice;
+	
+	public Amazon(WebDriver driver){
+
+        this.driver = driver;
+
+        //This initElements method will create all WebElements
+        PageFactory.initElements(driver, this);
+
+    }
+	
+	public void serachIphone() throws InterruptedException{
+		searchBox.clear();
+		searchBox.sendKeys("iPhone XR (64GB) - Yellow");
+		Thread.sleep(2000);
+		searchBtn.click();
+		Thread.sleep(3000);
+	}
+	
+	public void clickOnLink() throws InterruptedException{
+		
+		iphonelink.click();
+		Thread.sleep(3000);
+	}
+	
+	public double getPrice(){
+		String price = iphonePrice.getText();
+		double totalPrice = Double.parseDouble(price.replaceAll("[^0-9\\.]+", ""));
+		System.out.println(totalPrice);
+		return totalPrice;
+	}
+	
+	public void switchTab(){
+		//Set<String> windows = driver.getWindowHandles();
+		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+	}
+	
+	
+
+}

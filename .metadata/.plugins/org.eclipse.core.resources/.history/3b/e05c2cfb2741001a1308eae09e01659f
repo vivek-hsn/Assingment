@@ -1,0 +1,53 @@
+package assignment.test;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import assignment.pages.Amazon;
+
+public class iPhonePrice {
+	
+	String driverPath = "E:\\Vikranth Frnd\\test\\src\\test\\resource\\drivers\\chromedriver.exe";
+	
+	WebDriver driver;
+	 
+	
+	@BeforeTest
+	public void setup(){
+		 
+		System.setProperty("webdriver.chrome.driver", driverPath);
+	        
+	    driver = new ChromeDriver();
+
+	    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	    driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+	    driver.manage().window().maximize();
+
+	}
+	
+	@Test
+	public void checkPriceAmazon() throws InterruptedException{
+		
+		driver.get("https://www.amazon.in/");
+		
+		Amazon amazonPage = new Amazon(driver);
+		amazonPage.serachIphone();
+		amazonPage.clickOnLink();
+		amazonPage.switchTab();
+		double amazonPrice = amazonPage.getPrice();
+		driver.close();
+		amazonPage.switchTab();
+		
+		driver.get("https://www.flipkart.com/");
+		amazonPage.fkCloseLoginPopup();
+		amazonPage.fkSearchIphone();
+		
+		//driver.quit();
+		
+	}
+
+}
